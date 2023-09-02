@@ -6,7 +6,12 @@ package com.example.demo.controller;
 //@Controller这个是可以与Thymeleaf模板引擎使用时可以返回一个页面的
 
 import com.alibaba.fastjson.JSON;
+import com.example.demo.pojo.Student;
+import com.example.demo.service.IStudentInterface;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -15,11 +20,14 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/test")
 public class TestController {
 
+    @Autowired
+    public IStudentInterface studentInterface;
 
     //Get请求
     @GetMapping
     public String queryAll() {
-        return JSON.toJSONString("get");
+        List<Student> students = studentInterface.queryAllStudents();
+        return JSON.toJSONString(students);
     }
 
     //使用了RestFull风格
